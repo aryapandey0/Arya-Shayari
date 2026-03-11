@@ -9,7 +9,7 @@ export const getShayariByUser = async (req, res) => {
     const userShayari = await Shayari.find({
       author: userId,
       status:"APPROVED"
-    }).populate("author", "name email profile")
+    }).populate("author", "name email profile role")
 
     res.status(200).json({
       message: "Shayari fetched successfully",

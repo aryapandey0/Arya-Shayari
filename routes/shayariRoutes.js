@@ -13,9 +13,13 @@ import Shayari from "../models/Shayari.js";
 const router = express.Router()
 
 router.post("/add", resolveUser, addShayari);
+router.delete("/delete/:id",resolveUser,resolveRole("ADMIN"),async(req,res)=>{
+    const deleted = await Shayari.findByIdAndDelete(req.params.id)
+    res.status(200).json({message:"Deleted Siccessfully"})
+})
 
 router.get("/all",resolveUser,async(req,res)=>{
-    const shayari = await Shayari.find({status:"APPROVED"}).populate("author","name email profile")
+    const shayari = await Shayari.find({status:"APPROVED"}).populate("author","name email profile role")
     res.status(200).json({data:shayari})
 })
 router.get("/my",resolveUser,getMyShayari)
@@ -30,7 +34,6 @@ router.get("/:userId",resolveUser,getShayariByUser)
 
 router.put("/approve/:id",resolveUser,resolveRole("ADMIN"),approveShayari)
 router.put("/reject/:id",resolveUser,resolveRole("ADMIN"),rejectShayari)
-
 
 
 export default router;

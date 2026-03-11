@@ -7,7 +7,7 @@ export const getMyShayari = async (req, res) => {
     const shayaries = await Shayari.find({
       author: req.user._id,
       status:"APPROVED"
-    }).populate("author" ,"name email profile")
+    }).populate("author" ,"name email profile role")
 
     console.log("req.user is ",req.user)
 

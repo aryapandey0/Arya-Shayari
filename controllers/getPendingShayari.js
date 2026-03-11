@@ -2,7 +2,7 @@ import Shayari from "../models/Shayari.js"
 
 export const getPendingShayari=async(req,res)=>{
     try{
-    const shayaries = await Shayari.find({status:"PENDING"}).populate("author","name email profile")
+    const shayaries = await Shayari.find({status:"PENDING"}).populate("author","name email profile role")
   
 res.status(200).json({data:shayaries})
     }
