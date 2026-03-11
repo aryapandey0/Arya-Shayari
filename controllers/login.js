@@ -36,11 +36,11 @@ export const login = async (req, res) => {
 
     // ⭐ token cookie me store
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,   // production me true
-      sameSite: "strict",
-      maxAge: 24 * 60 * 60 * 1000
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: "None",
+  maxAge: 24 * 60 * 60 * 1000
+});
 
     res.status(200).json({
       message: "Logged in successfully"
