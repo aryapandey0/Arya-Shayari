@@ -32,7 +32,13 @@ const shayariSchema = new mongoose.Schema(
         type:String,
         enum:["PENDING","APPROVED","REJECTED"],
         default:"PENDING"
-    }
+    },
+    likes:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User"
+        }
+    ]
 },
 {
     timestamps: true
