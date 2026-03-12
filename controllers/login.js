@@ -31,7 +31,7 @@ export const login = async (req, res) => {
         role: exist.role
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" }
     );
 
     // ⭐ token cookie me store
@@ -39,7 +39,7 @@ export const login = async (req, res) => {
   httpOnly: true,
   secure: true,
   sameSite: "None",
-  maxAge: 24 * 60 * 60 * 1000
+  maxAge: 7 * 24 * 60 * 60 * 1000
 });
 
     res.status(200).json({
