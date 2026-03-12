@@ -2,7 +2,7 @@ import Shayari from "../models/Shayari.js";
 
 const addShayari = async (req, res) => {
 
-    const { content } = req.body;
+    const { content ,category} = req.body;
     const author = req.user._id;
 
     try {
@@ -10,6 +10,7 @@ const addShayari = async (req, res) => {
         const shayari = new Shayari({
             author,
             content,
+            category
            
         });
 

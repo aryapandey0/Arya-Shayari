@@ -18,6 +18,7 @@ export const rejectShayari = async (req,res)=>{
     "Shayari Rejected",
     "Sad to inform that your shayari has been rejected by Arya."
    )
+   console.log("Reject email sent ")
   }catch(mailErr){
    console.log("Mail failed:", mailErr)
   }

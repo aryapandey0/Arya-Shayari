@@ -23,8 +23,8 @@ router.get("/me",resolveUser,(req,res)=>{
 router.get("/all",resolveUser,getAllUsers)
 router.get("/delete/:id",resolveUser,resolveRole("ADMIN"),deleteUser)
 router.put("/bio",resolveUser,async(req,res)=>{
-    const updated = await User.findByIdAndUpdate(req.user._id,{bio:req.body.bio})
-    res.status(200).json({message:"Bio Updated"})
+    const updated = await User.findByIdAndUpdate(req.user._id,{bio:req.body.bio,dob:req.body.dob})
+    res.status(200).json({message:"Bio and Dob Updated"})
 })
 
 router.post("/logout",(req,res)=>{
@@ -47,5 +47,7 @@ router.put(
   upload.single("profile"),
   uploadProfileImage
 );
+
+
 
 export default router;

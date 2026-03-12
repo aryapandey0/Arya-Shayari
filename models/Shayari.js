@@ -7,6 +7,22 @@ const shayariSchema = new mongoose.Schema(
         ref: "User",
         required: true
     },
+    category:{
+        type:String,
+       enum: [
+  "LOVE",
+  "ATTITUDE",
+  "SAD",
+  "BROKEN",
+  "MOTIVATION",
+  "FRIENDSHIP",
+  "LIFE",
+  "OTHER"
+],
+        default:"OTHER",
+        required:true,
+
+    },
 
     content: {
         type: String,

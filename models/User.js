@@ -24,9 +24,11 @@ const userSchema = new mongoose.Schema(
     enum:["USER","ADMIN"],
     default:"USER"
  },
- dob:{
-    type:Date
- },
+dob: {
+  type: Date,
+  required: true,
+  max: Date.now
+},
  bio:{type:String,default:""},
  profile:{
     type:String,

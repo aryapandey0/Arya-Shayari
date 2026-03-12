@@ -18,6 +18,34 @@ router.delete("/delete/:id",resolveUser,resolveRole("ADMIN"),async(req,res)=>{
     res.status(200).json({message:"Deleted Siccessfully"})
 })
 
+router.get("/category/:category", resolveUser, async (req, res) => {
+
+  try {
+
+    const category = req.params.category.toUpperCase();
+if(category=="ALL"){
+    const shayari = await Shayari.find({ status:"APPROVED"});
+    res.status(200).json({
+      message: "Successfully sent",
+      data: shayari
+    });
+}
+    const shayari = await Shayari.find({ category:category ,status:"APPROVED"});
+    res.status(200).json({
+      message: "Successfully sent",
+      data: shayari
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: "Server error"
+    });
+
+  }
+
+});
+
 router.get("/all",resolveUser,async(req,res)=>{
     const shayari = await Shayari.find({status:"APPROVED"}).populate("author","name email profile role")
     res.status(200).json({data:shayari})
