@@ -1,9 +1,10 @@
-import { sendMail } from "../config/email.js"
-import Shayari from "../models/Shayari.js"
+import { sendMail } from "../config/email.js";
+import Shayari from "../models/Shayari.js";
+import { io } from "../server.js";
 
 export const approveShayari = async (req,res)=>{
 
-  const { id } = req.params
+  const { id } = req.params;
 
   try{
 
@@ -11,20 +12,26 @@ export const approveShayari = async (req,res)=>{
       id,
       { status:"APPROVED" },
       { returnDocument:"after" }
-    ).populate("author","email")
+    ).populate("author","email");
 
- /*   await sendMail(
+    io.to(updated.author._id.toString()).emit("notification",{
+      message:"🎉 Your shayari has been approved"
+    });
+
+    /*
+    await sendMail(
       updated.author.email,
       "Shayari Approved",
       "Glad to inform that your shayari has been approved by Arya. You can check it in the app."
     )
-  console.log("Approve email sent ")*/
+    */
 
-    res.status(200).json({ message:"Approved" })
+    res.status(200).json({ message:"Approved" });
+
   }
   catch(err){
 
-    res.status(500).json({ message:"not successful" })
+    res.status(500).json({ message:"not successful" });
 
   }
 
