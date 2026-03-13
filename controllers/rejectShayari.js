@@ -12,7 +12,7 @@ export const rejectShayari = async (req,res)=>{
    { new:true }
   ).populate("author","email")
 
-  try{
+ /* try{
    await sendMail(
     updated.author.email,
     "Shayari Rejected",
@@ -22,7 +22,7 @@ export const rejectShayari = async (req,res)=>{
   }catch(mailErr){
    console.log("Mail failed:", mailErr)
   }
-
+*/
   res.status(200).json({message:"Rejected"})
 
  }catch(err){

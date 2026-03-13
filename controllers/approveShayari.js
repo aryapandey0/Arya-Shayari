@@ -13,14 +13,14 @@ export const approveShayari = async (req,res)=>{
       { returnDocument:"after" }
     ).populate("author","email")
 
-    await sendMail(
+ /*   await sendMail(
       updated.author.email,
       "Shayari Approved",
       "Glad to inform that your shayari has been approved by Arya. You can check it in the app."
     )
   console.log("Approve email sent ")
     res.status(200).json({ message:"Approved" })
-
+*/
   }
   catch(err){
 

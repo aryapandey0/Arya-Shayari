@@ -29,12 +29,12 @@ const user = await User.create({
     role:role
 });
 
- try{
+ /*try{
 await sendMail(email,"Welcome to Arya-Shayari",  `Hello ${name}, you have successfully registered to Arya-Shayari`)
  }
  catch(err){
     res.status(500).json({message:"Mail couldnt be mailed"})
- }
+ }*/
 user.password=undefined
 
 res.status(201).json({

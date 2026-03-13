@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-
+import { Server } from "socket.io";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -11,6 +11,8 @@ import shayariRoutes from "./routes/shayariRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+let io;
+export { io };
 
 /* ---------- Middlewares ---------- */
 
@@ -45,9 +47,39 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    app.listen(PORT, () => {
+   const server = app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
+
+     io = new Server(server, {
+      cors: {
+        origin: [
+          "http://localhost:5173",
+          "https://arya-shayari.netlify.app"
+        ],
+        credentials: true
+      }
+    });
+
+    io.on("connection",(socket)=>{
+
+  console.log("User connected :", socket.id);
+
+  socket.on("register",(userId)=>{
+
+    socket.join(userId);
+
+    console.log(`User ${userId} joined room`);
+
+  });
+
+  socket.on("disconnect",()=>{
+
+    console.log("User disconnected :", socket.id);
+
+  });
+
+});
 
   } catch (error) {
     console.error("Server failed to start:", error);

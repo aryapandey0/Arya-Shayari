@@ -21,7 +21,7 @@ router.delete("/delete/:id",resolveUser,resolveRole("ADMIN"),async(req,res)=>{
     res.status(200).json({message:"Deleted Siccessfully"})
 })
 
-router.get("/category/:category", resolveUser, async (req, res) => {
+router.get("/category/:category", async (req, res) => {
 
   try {
 
@@ -49,7 +49,7 @@ if(category=="ALL"){
 
 });
 
-router.get("/all",resolveUser,async(req,res)=>{
+router.get("/all",async(req,res)=>{
     const shayari = await Shayari.find({status:"APPROVED"}).populate("author","name email profile role")
     res.status(200).json({data:shayari})
 })
