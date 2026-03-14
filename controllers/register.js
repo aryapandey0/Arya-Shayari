@@ -17,8 +17,6 @@ const exist = await User.findOne({ email });
 if (exist) {
     return res.status(400).json({ message: "User already exists" });
 }
-let role="USER"
-if(email == "adminarya@gmail.com" && password == "12345")role="ADMIN"
 
 const hashed = await bcrypt.hash(password, 10);
 
@@ -26,16 +24,20 @@ const user = await User.create({
     name,
     email,
     password: hashed,
-    role:role
+    role: "USER"
 });
 
- /*try{
-await sendMail(email,"Welcome to Arya-Shayari",  `Hello ${name}, you have successfully registered to Arya-Shayari`)
- }
- catch(err){
-    res.status(500).json({message:"Mail couldnt be mailed"})
- }*/
-user.password=undefined
+try {
+  await sendMail(
+    email,
+    "Welcome to Arya-Shayari",
+    `Hello ${name}, you have successfully registered to Arya-Shayari`
+  );
+} catch (err) {
+  console.log("Mail failed but user registered");
+}
+
+user.password = undefined;
 
 res.status(201).json({
     message: "User registered successfully",

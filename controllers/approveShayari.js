@@ -18,21 +18,21 @@ export const approveShayari = async (req,res)=>{
       message:"🎉 Your shayari has been approved"
     });
 
-    /*
-    await sendMail(
-      updated.author.email,
-      "Shayari Approved",
-      "Glad to inform that your shayari has been approved by Arya. You can check it in the app."
-    )
-    */
+    // email ko alag try-catch me rakho
+    try{
+      await sendMail(
+        updated.author.email,
+        "Shayari Approved",
+        "Glad to inform that your shayari has been approved by Arya. You can check it in the app."
+      );
+    }catch(mailErr){
+      console.log("Email failed but approval done:", mailErr.message);
+    }
 
     res.status(200).json({ message:"Approved" });
 
   }
   catch(err){
-
     res.status(500).json({ message:"not successful" });
-
   }
-
 }
