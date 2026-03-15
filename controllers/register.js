@@ -26,6 +26,10 @@ const user = await User.create({
     password: hashed,
     role: "USER"
 });
+res.status(201).json({
+    message: "User registered successfully",
+    data: user
+});
 
 try {
   await sendMail(
@@ -39,10 +43,6 @@ try {
 
 user.password = undefined;
 
-res.status(201).json({
-    message: "User registered successfully",
-    data: user
-});
 
 } catch (err) {
 
