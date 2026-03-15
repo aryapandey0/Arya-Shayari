@@ -16,8 +16,14 @@ const addShayari = async (req, res) => {
 
         await shayari.save();
 
-        // populate after save
+       
+       
         await shayari.populate("author", "name");
+        
+         res.status(201).json({
+            message: "Shayari added successfully",
+            shayari
+        });
 
         try {
             await sendMail(
@@ -29,10 +35,7 @@ const addShayari = async (req, res) => {
             console.log("Mail failed but shayari saved");
         }
 
-        res.status(201).json({
-            message: "Shayari added successfully",
-            shayari
-        });
+       
 
     } catch (err) {
 

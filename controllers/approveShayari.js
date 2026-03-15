@@ -13,11 +13,10 @@ export const approveShayari = async (req,res)=>{
       { status:"APPROVED" },
       { returnDocument:"after" }
     ).populate("author","email");
-
-    io.to(updated.author._id.toString()).emit("notification",{
+     res.status(200).json({ message:"Approved" });
+      io.to(updated.author._id.toString()).emit("notification",{
       message:"🎉 Your shayari has been approved"
     });
-
     // email ko alag try-catch me rakho
     try{
       await sendMail(
@@ -25,11 +24,10 @@ export const approveShayari = async (req,res)=>{
         "Shayari Approved",
         "Glad to inform that your shayari has been approved by Arya. You can check it in the app."
       );
+
     }catch(mailErr){
       console.log("Email failed but approval done:", mailErr.message);
     }
-
-    res.status(200).json({ message:"Approved" });
 
   }
   catch(err){
