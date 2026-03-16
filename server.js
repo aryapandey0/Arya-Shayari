@@ -8,7 +8,7 @@ import commentRoutes from "./routes/commentRoutes.js"
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import shayariRoutes from "./routes/shayariRoutes.js";
-
+import aiRoutes from "./routes/aiRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 let io;
@@ -42,7 +42,7 @@ app.use("/api/auth", userRoutes);
 
 app.use("/api/comment", commentRoutes);
 app.use("/api/shayari", shayariRoutes);
-
+app.use("/api/ai", aiRoutes);
 /* ---------- Start Server ---------- */
 
 const startServer = async () => {
