@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+import commentRoutes from "./routes/commentRoutes.js"
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import shayariRoutes from "./routes/shayariRoutes.js";
@@ -39,6 +39,8 @@ app.get("/hi", (req, res) => {
 /* ---------- Routes ---------- */
 
 app.use("/api/auth", userRoutes);
+
+app.use("/api/comment", commentRoutes);
 app.use("/api/shayari", shayariRoutes);
 
 /* ---------- Start Server ---------- */
