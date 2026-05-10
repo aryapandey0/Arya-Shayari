@@ -23,17 +23,22 @@ router.delete("/delete/:id",resolveUser,resolveRole("ADMIN"),async(req,res)=>{
 
 router.get("/category/:category", async (req, res) => {
 
+
   try {
+    const page = parseInt(req.query.page || 1)
+    const limit = parseInt(req.query.limit || 5)
+
+    const skip = (page-1)*limit
 
     const category = req.params.category.toUpperCase();
 if(category=="ALL"){
-    const shayari = await Shayari.find({ status:"APPROVED"});
+    const shayari = await Shayari.find({ status:"APPROVED"}).skip(skip).limit(limit);
     res.status(200).json({
       message: "Successfully sent",
       data: shayari
     });
 }
-    const shayari = await Shayari.find({ category:category ,status:"APPROVED"}).populate("author","name email profile role");
+    const shayari = await Shayari.find({ category:category ,status:"APPROVED"}).skip(skip).limit(limit).populate("author","name email profile role");
     res.status(200).json({
       message: "Successfully sent",
       data: shayari
@@ -49,10 +54,28 @@ if(category=="ALL"){
 
 });
 
-router.get("/all",async(req,res)=>{
-    const shayari = await Shayari.find({status:"APPROVED"}).populate("author","name email profile role")
-    res.status(200).json({data:shayari})
-})
+router.get("/all", async (req, res) => {
+
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 5;
+
+  const skip = (page - 1) * limit;
+
+  const shayari = await Shayari.find({ status: "APPROVED" })
+    .skip(skip)
+    .limit(limit)
+    .populate("author", "name email profile role");
+
+  const total = await Shayari.countDocuments({ status: "APPROVED" });
+
+  res.status(200).json({
+    total,
+    page,
+    totalPages: Math.ceil(total / limit),
+    data: shayari
+  });
+});
+
 router.get("/my",resolveUser,getMyShayari)
 router.get("/pending",resolveUser,resolveRole("ADMIN"),getPendingShayari)
 
